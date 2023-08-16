@@ -1,0 +1,17 @@
+/* Estilos para la clase navbar-left */
+.navbar-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Estilos para los enlaces dentro de la clase navbar-left */
+  .navbar-left a.nav-link {
+    margin-right: 40px; /* Agrega un margen entre los enlaces */
+    color: black; /* Cambia el color del texto */
+    text-decoration: none; /* Elimina la subrayado de los enlaces */
+  }
+  
+  /* Estilos para el icono en el enlace de dropdown */
+  .dropdown .bi-person-fill {
+    margin-right: 5px; /* Agrega un margen a la derecha del icono */
+  }
