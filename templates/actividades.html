@@ -6,7 +6,7 @@
 
 <head>
     <link rel="stylesheet" href="actividades.css">
-    {% block title %}Inicio{% endblock %}
+    {% block title %}Actividades{% endblock %}
 </head>
 {% block content %}
     <div class="container mt-4">
@@ -26,7 +26,7 @@
                   <h5 class="card-title">{{actividad.1 }}</h5>
                   <p class="card-text">{{ actividad.2}}</p>
                   <p class="card-text"><small class="text-muted">{{ actividad.4}}</small></p>
-                  <a href="/ver_actividad" class="btn btn-success btn-lg btn-block btn-block card-button">Ver actividad</a>
+                  <a href="/ver_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Ver actividad</a>
             </div>
         </div>
         <br>

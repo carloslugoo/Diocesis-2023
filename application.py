@@ -19,8 +19,6 @@ application = app = Flask(__name__)
 
 app.config.from_object(DevConfig)
 
-
-
 @app.route('/')
 def index():
     return redirect(url_for('login'))
@@ -81,8 +79,18 @@ def actividades():
   mycursor.execute('SELECT * FROM actividades')
   actividades = mycursor.fetchall()
   return render_template('actividades.html', user = usuario, actividades = actividades)
+
+#Ver actividad
+@app.route('/ver_actividad/<int:id>')
+def ver_actividad(id):
+  usuario = session.get('user_data')
+  mycursor = mydb.cursor()
+  query = "SELECT * FROM actividades WHERE id_actividad = %s"
+  mycursor.execute(query, (id,))
+  actividad = mycursor.fetchall()
+  return render_template('ver_actividad.html', user = usuario, actividad = actividad[0])
+
 #Crear actividad Admin
-#Actividades
 @app.route('/crear_actividad', methods=['GET', 'POST'])
 def crear_actividad():
   usuario = session.get('user_data')

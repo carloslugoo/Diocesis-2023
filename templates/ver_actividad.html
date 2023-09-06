@@ -1,0 +1,33 @@
+{% if user.3 == 2%}
+    {% extends "./admin_views/base.html" %}
+{%else%}
+    {% extends "./colegios_views/base.html" %}
+{%endif%}
+
+{% block title %}Ver Actividad{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Parte Izquierda: Información del Autor y Fecha de Realización -->
+        <div class="col-md-6">
+            <h3>Información del Autor</h3>
+            <p>Nombre del Autor: [Nombre del Autor]</p>
+            <p>Fecha: {{actividad.4}}</p>
+            <button class="btn btn-success">Acoplarme a la actividad</button>
+            <!-- Agregar más detalles del autor si es necesario -->
+        </div>
+        
+        <!-- Parte Derecha: Detalles de la Actividad -->
+        <div class="col-md-6">
+            <h2>{{actividad.1}}</h2>
+            <p>Descripción de la Actividad:</p>
+            <p>{{actividad.2}}</p>
+            <p>Objetivos de la Actividad:</p>
+            <p>{{actividad.3}}</p>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
