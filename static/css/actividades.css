@@ -1,0 +1,10 @@
+.custom{
+    width: 300px; /* Establece el ancho deseado */
+    height: 300px; /* Establece la altura deseada */
+}
+.card-button {
+    position: absolute; /* Establece la posición absoluta */
+    bottom: 0px; /* Ajusta la distancia desde la parte inferior según sea necesario */
+    left: 0px; /* Ajusta la distancia desde la izquierda según sea necesario */
+    right: 0px; /* Ajusta la distancia desde la derecha según sea necesario */
+}

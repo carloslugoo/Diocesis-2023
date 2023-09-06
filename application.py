@@ -34,14 +34,14 @@ def login():
         print(f'Usuario: {usuario}, Contraseña: {contrasena}')
         aux = comprobarcuenta(usuario, contrasena)
         if aux:
-          print(aux)
+          #print(aux)
           #comprobar si es admin o alguien de una escuela
           if int(aux[3]) == 2: #admin
-            query = "SELECT * FROM admin WHERE id_user = %s"
+            query = "SELECT id_admin, nmb_admin, admin.id_user, id_tipo_user FROM admin, usuarios WHERE admin.id_user = %s and admin.id_user = usuarios.id_user"
             mycursor.execute(query, (int(aux[0]),)) 
             data = mycursor.fetchall()
           else: #colegio
-            query = "SELECT * FROM escuelas WHERE id_user = %s"
+            query = "SELECT escuela_id, nmb_esc, escuelas.id_user, id_tipo_user FROM escuelas, usuarios WHERE escuelas.id_user = %s and escuelas.id_user = usuarios.id_user"
             mycursor.execute(query, (int(aux[0]),)) 
             data = mycursor.fetchall()
           print(data)
@@ -58,19 +58,50 @@ def comprobarcuenta(user, pasw):
       if userdata:
         passcheck = userdata[2]
       if userdata and check_password_hash(passcheck, pasw):
-        print("Acceso concedido...")
+        #print("Acceso concedido...")
         return userdata
     else:
-      print("Malos credenciales...")
+      #print("Malos credenciales...")
       return userdata
 
 @app.route('/home')
 def home():
   usuario = session.get('user_data')
-  print(usuario)
-  return render_template('home.html', user = usuario)
+  #print(usuario)
+  if usuario[3] == 2:
+    return render_template('./admin_views/home.html', user = usuario)
+  else:
+     return render_template('./colegios_views/home.html', user = usuario)
+  
+#Actividades
+@app.route('/actividades')
+def actividades():
+  usuario = session.get('user_data')
+  mycursor = mydb.cursor()
+  mycursor.execute('SELECT * FROM actividades')
+  actividades = mycursor.fetchall()
+  return render_template('actividades.html', user = usuario, actividades = actividades)
+#Crear actividad Admin
+#Actividades
+@app.route('/crear_actividad', methods=['GET', 'POST'])
+def crear_actividad():
+  usuario = session.get('user_data')
+  if request.method == 'POST':
+      # Obtener los datos del formulario
+      titulo = request.form['title']
+      descripcion = request.form['description']
+      objetivos = request.form['objectives']
+      fecha_realizacion = request.form['date']
+      mycursor = mydb.cursor()
+      sql_insert = "INSERT INTO actividades (titulo, descripcion, objetivos, fecha) VALUES (%s, %s, %s, %s)"
+      valores = (titulo, descripcion, objetivos, fecha_realizacion)
+      # Ejecuta la sentencia SQL
+      mycursor.execute(sql_insert, valores)
+      mydb.commit()
+      return redirect(url_for('actividades'))
+  return render_template('./admin_views/crear_actividades.html', user = usuario)
 #Este no se va a ver, ya que van a tener cuentas creadas por defecto ya..
-@app.route('/cargar_accs', methods=['POST', 'GET'])
+#@app.route('/cargar_accs', methods=['POST', 'GET'])
 def cargar_accs():
     usuario = request.form.get('usuario')
     contrasena = request.form.get('contrasena')
@@ -84,7 +115,7 @@ def cargar_accs():
         mydb.commit()
         #Tipo usuario = 1 / Colegio
         print("Creado...")
-    return render_template('cargar_accs.html')
+    return render_template('./admin_views/cargar_accs.html')
 
 def createpassword(password):
   return generate_password_hash(password)
