@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-09-2023 a las 19:26:17
+-- Tiempo de generación: 07-09-2023 a las 23:26:10
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -32,16 +32,30 @@ CREATE TABLE `actividades` (
   `titulo` varchar(50) NOT NULL,
   `descripcion` longtext NOT NULL,
   `objetivos` longtext NOT NULL,
-  `fecha` date NOT NULL
+  `fecha` date NOT NULL,
+  `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `actividades`
 --
 
-INSERT INTO `actividades` (`id_actividad`, `titulo`, `descripcion`, `objetivos`, `fecha`) VALUES
-(1, 'Actividad 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sagittis consequat hendrerit. Suspendisse dignissim bibendum leo sit amet convallis. Morbi lobortis orci et scelerisque elementum. Aenean euismod tortor ligula, at facilisis libero interdum quis. Curabitur nec ex et tellus rutrum ullamcorper. Sed rutrum lobortis mauris, id vestibulum leo lacinia id. Nunc porta euismod tortor.', '- Maecenas cursus est ligula, ut tincidunt ipsum auctor eu. Donec bibendum magna ac justo pulvinar, quis \r\n- facilisis est viverra. Vestibulum mattis odio nec nulla tincidunt, vestibulum convallis augue interdum. \r\n-Curabitur tempus congue ligula, id aliquet leo rutrum a. Morbi ornare in nisi et ultrices. In feugiat, sapien at iaculis ultricies, arcu elit porttitor quam, at maximus lorem turpis laoreet mauris. ', '2023-12-31'),
-(2, 'Actividad 2', 'n hac habitasse platea dictumst. Nulla vulputate imperdiet quam nec tempus. ', 'Maecenas molestie, tortor in consectetur ultricies, arcu mi maximus libero, et dignissim ipsum sapien sed mi. Duis non auctor nisl. Cras posuere, est eu ornare egestas, sem elit ullamcorper neque, sit amet gravida ligula ligula at lorem.', '2024-02-02');
+INSERT INTO `actividades` (`id_actividad`, `titulo`, `descripcion`, `objetivos`, `fecha`, `id_user`) VALUES
+(1, 'Actividad 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sagittis consequat hendrerit. Suspendisse dignissim bibendum leo sit amet convallis. Morbi lobortis orci et scelerisque elementum. Aenean euismod tortor ligula, at facilisis libero interdum quis. Curabitur nec ex et tellus rutrum ullamcorper. Sed rutrum lobortis mauris, id vestibulum leo lacinia id. Nunc porta euismod tortor.', '- Maecenas cursus est ligula, ut tincidunt ipsum auctor eu. Donec bibendum magna ac justo pulvinar, quis \r\n- facilisis est viverra. Vestibulum mattis odio nec nulla tincidunt, vestibulum convallis augue interdum. \r\n-Curabitur tempus congue ligula, id aliquet leo rutrum a. Morbi ornare in nisi et ultrices. In feugiat, sapien at iaculis ultricies, arcu elit porttitor quam, at maximus lorem turpis laoreet mauris. ', '2023-12-31', 2),
+(2, 'Actividad 2', 'n hac habitasse platea dictumst. Nulla vulputate imperdiet quam nec tempus. ', 'Maecenas molestie, tortor in consectetur ultricies, arcu mi maximus libero, et dignissim ipsum sapien sed mi. Duis non auctor nisl. Cras posuere, est eu ornare egestas, sem elit ullamcorper neque, sit amet gravida ligula ligula at lorem.', '2024-02-02', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actividadxcolegio`
+--
+
+CREATE TABLE `actividadxcolegio` (
+  `id_axc` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_actividad` int(11) NOT NULL,
+  `fecha_adherido` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -137,6 +151,12 @@ ALTER TABLE `actividades`
   ADD PRIMARY KEY (`id_actividad`);
 
 --
+-- Indices de la tabla `actividadxcolegio`
+--
+ALTER TABLE `actividadxcolegio`
+  ADD PRIMARY KEY (`id_axc`);
+
+--
 -- Indices de la tabla `admin`
 --
 ALTER TABLE `admin`
@@ -169,6 +189,12 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `actividades`
   MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `actividadxcolegio`
+--
+ALTER TABLE `actividadxcolegio`
+  MODIFY `id_axc` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `admin`

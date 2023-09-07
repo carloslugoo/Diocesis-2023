@@ -15,7 +15,7 @@
                 <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
             <div class="lh-1">
             <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-journal-bookmark"></i> {{actividad.1}}</h1>
-            <small>Propuesto por: {{actividad.5}} el {{actividad.4}}</small>
+            <small>Propuesto por: {{actividad.5}} para la fecha: {{actividad.4}}</small>
             </div>
             </div>
                 <hr>
@@ -38,9 +38,9 @@
         <div class="col-md-4">
             <br>
             {% if user.3 == 2%}
-            <a href="/ver_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Borrar actividad</a>
+            <a href="/paticipar_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Borrar actividad</a>
             {%else%}
-            <a href="/ver_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Partipar</a>
+            <a href="/borrar_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Partipar</a>
             {%endif%}
         </div>
         
