@@ -85,15 +85,17 @@ def actividades():
 def ver_actividad(id):
   usuario = session.get('user_data')
   mycursor = mydb.cursor()
-  query = "SELECT * FROM actividades WHERE id_actividad = %s"
+  query = "SELECT id_actividad, titulo, descripcion, objetivos, fecha, nmb_admin FROM actividades, admin WHERE id_actividad = %s and admin.id_user = actividades.id_user"
   mycursor.execute(query, (id,))
   actividad = mycursor.fetchall()
+  print(actividad)
   return render_template('ver_actividad.html', user = usuario, actividad = actividad[0])
 
 #Crear actividad Admin
 @app.route('/crear_actividad', methods=['GET', 'POST'])
 def crear_actividad():
   usuario = session.get('user_data')
+  print(usuario)
   if request.method == 'POST':
       # Obtener los datos del formulario
       titulo = request.form['title']
@@ -101,8 +103,8 @@ def crear_actividad():
       objetivos = request.form['objectives']
       fecha_realizacion = request.form['date']
       mycursor = mydb.cursor()
-      sql_insert = "INSERT INTO actividades (titulo, descripcion, objetivos, fecha) VALUES (%s, %s, %s, %s)"
-      valores = (titulo, descripcion, objetivos, fecha_realizacion)
+      sql_insert = "INSERT INTO actividades (titulo, descripcion, objetivos, fecha, id_user) VALUES (%s, %s, %s, %s, %s)"
+      valores = (titulo, descripcion, objetivos, fecha_realizacion, usuario[3])
       # Ejecuta la sentencia SQL
       mycursor.execute(sql_insert, valores)
       mydb.commit()
