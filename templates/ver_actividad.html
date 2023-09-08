@@ -3,8 +3,12 @@
 {%else%}
     {% extends "./colegios_views/base.html" %}
 {%endif%}
+<head>
+  
+    {% block title %}Ver Actividad{% endblock %}
+    <link rel="stylesheet" href="/static/css/ver_actividades.css">
+</head>
 
-{% block title %}Ver Actividad{% endblock %}
 
 {% block content %}
 <br>
@@ -38,14 +42,14 @@
         <div class="col-md-4">
             <br>
             {% if user.3 == 2%}
-            <a href="/paticipar_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Borrar actividad</a>
+            <button onclick="confirmDelete('{{actividad.0}}')" class="btn btn-success btn-lg btn-block btn-block card-button">Borrar Actividad</button>
             {%else%}
-            <a href="/borrar_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Partipar</a>
+            <a href="/paticipar_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Borrar actividad</a>
             {%endif%}
         </div>
         
         
     </div>
 </div>
-
+<script src="/static/js/ver_actividades.js"></script>
 {% endblock %}

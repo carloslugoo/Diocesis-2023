@@ -9,19 +9,19 @@
     {% block title %}Actividades{% endblock %}
 </head>
 {% block content %}
+{% if user.3 == 2%}
     <div class="container mt-4">
         <div class="row">
+            <div class="col-3 text-right">
+                <a href="/crear_actividad" class="btn btn-success btn-lg btn-block" style="margin-bottom: 10px;">Crear Actividad</a>
+            </div>
+            {%endif%}
                 <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
                     <div class="lh-1">
                     <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-journal-bookmark"></i>Últimas Actividades</h1>
                     <small></small>
                     </div>
                     </div>
-            {% if user.3 == 2%}
-            <div class="col-3 text-right">
-                <a href="/crear_actividad" class="btn btn-success btn-lg btn-block" style="margin-bottom: 10px;">Crear Actividad</a>
-            </div>
-            {%endif%}
         </div>
             {% for actividad in actividades %}
             <div class="card">

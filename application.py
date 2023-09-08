@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect, render_template, request, session
+from flask import Flask, url_for, redirect, render_template, request, session, jsonify
 from config import DevConfig
 
 #Encriptar la pass
@@ -91,9 +91,19 @@ def ver_actividad(id):
   print(actividad)
   return render_template('ver_actividad.html', user = usuario, actividad = actividad[0])
 
+@app.route('/borrar_actividad/<int:id>', methods=['DELETE'])
+def borrar_actividad(id):
+  print("Borrar actividad", id)
+  mycursor = mydb.cursor()
+  query = "DELETE FROM actividades WHERE id_actividad = %s"
+  mycursor.execute(query, (id,))
+  mydb.commit()
+  return jsonify({"message": "Actividad borrada exitosamente"})
+
 #Crear actividad Admin
 @app.route('/crear_actividad', methods=['GET', 'POST'])
 def crear_actividad():
+
   usuario = session.get('user_data')
   print(usuario)
   if request.method == 'POST':
@@ -110,6 +120,8 @@ def crear_actividad():
       mydb.commit()
       return redirect(url_for('actividades'))
   return render_template('./admin_views/crear_actividades.html', user = usuario)
+
+
 #Este no se va a ver, ya que van a tener cuentas creadas por defecto ya..
 #@app.route('/cargar_accs', methods=['POST', 'GET'])
 def cargar_accs():
