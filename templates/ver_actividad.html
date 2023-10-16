@@ -35,8 +35,15 @@
                 <h1 class="h3 mb-0 text-black lh-1">Colegios adheridos</h1>
                 </div>
             </div>
+            {%if colegios%}
+            <ul>
+               {% for colegio in colegios%}
+                    <li>{{colegio.2}}</li>
+               {%endfor%}
+            </ul>
+            {%else%}
             <small>Ningun colegio realizo esta actividad...</small>
-
+            {%endif%}
         </div>
      
         <div class="col-md-4">
@@ -44,7 +51,11 @@
             {% if user.3 == 2%}
             <button onclick="confirmDelete('{{actividad.0}}')" class="btn btn-success btn-lg btn-block btn-block card-button">Borrar Actividad</button>
             {%else%}
-            <a href="/paticipar_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Borrar actividad</a>
+                {% if comp%}
+                    <small>Su colegio ya esta adherido a la actividad...</small>
+                {%else%}
+                    <button onclick="confirmarActividad('{{actividad.0}}')" class="btn btn-success btn-lg btn-block btn-block card-button">Participar</button>
+                {%endif%}
             {%endif%}
         </div>
         

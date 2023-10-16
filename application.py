@@ -85,11 +85,21 @@ def actividades():
 def ver_actividad(id):
   usuario = session.get('user_data')
   mycursor = mydb.cursor()
+  #query de info de actividad
   query = "SELECT id_actividad, titulo, descripcion, objetivos, fecha, nmb_admin FROM actividades, admin WHERE id_actividad = %s and admin.id_user = actividades.id_user"
   mycursor.execute(query, (id,))
   actividad = mycursor.fetchall()
-  print(actividad)
-  return render_template('ver_actividad.html', user = usuario, actividad = actividad[0])
+  #print(actividad)
+  #query de colegios adheridos
+  query = "SELECT id_axc, actividadxcolegio.escuela_id, nmb_esc FROM actividadxcolegio, escuelas WHERE id_actividad = %s and actividadxcolegio.escuela_id = escuelas.escuela_id"
+  mycursor.execute(query, (id,))
+  colegios = mycursor.fetchall()
+  print(colegios)
+  #query para comprobar si ya adherio
+  query = "SELECT id_axc, escuela_id FROM actividadxcolegio WHERE id_actividad = %s and escuela_id = %s"
+  mycursor.execute(query, (id, usuario[3]))
+  comp = mycursor.fetchall()
+  return render_template('ver_actividad.html', user = usuario, actividad = actividad[0], colegios = colegios, comp = comp)
 
 @app.route('/borrar_actividad/<int:id>', methods=['DELETE'])
 def borrar_actividad(id):
@@ -100,10 +110,26 @@ def borrar_actividad(id):
   mydb.commit()
   return jsonify({"message": "Actividad borrada exitosamente"})
 
+
+#Adherirse a la actividad COLEGIO
+@app.route('/participar_actividad/<int:id>', methods=['POST'])
+def participar_actividad(id):
+  import datetime
+  # Obtén la fecha y hora actual
+  fecha_actual = datetime.datetime.now()
+  # Formatea la fecha en el formato adecuado para SQL (YYYY-MM-DD HH:MM:SS)
+  fecha_formateada = fecha_actual.strftime('%Y-%m-%d')
+  usuario = session.get('user_data')
+  print("actividad", id)
+  mycursor = mydb.cursor()
+  mycursor.execute('INSERT INTO actividadxcolegio (escuela_id, id_actividad, fecha_adherido) VALUES (%s, %s, %s)',
+                        (usuario[3], id, fecha_formateada))
+  mydb.commit()
+  return jsonify({"message": "Exito"})
+
 #Crear actividad Admin
 @app.route('/crear_actividad', methods=['GET', 'POST'])
 def crear_actividad():
-
   usuario = session.get('user_data')
   print(usuario)
   if request.method == 'POST':
