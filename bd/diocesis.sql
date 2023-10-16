@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-09-2023 a las 23:26:10
+-- Tiempo de generación: 16-10-2023 a las 20:30:00
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -52,10 +52,17 @@ INSERT INTO `actividades` (`id_actividad`, `titulo`, `descripcion`, `objetivos`,
 
 CREATE TABLE `actividadxcolegio` (
   `id_axc` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
+  `escuela_id` int(11) NOT NULL,
   `id_actividad` int(11) NOT NULL,
   `fecha_adherido` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `actividadxcolegio`
+--
+
+INSERT INTO `actividadxcolegio` (`id_axc`, `escuela_id`, `id_actividad`, `fecha_adherido`) VALUES
+(1, 1, 1, '2023-10-16');
 
 -- --------------------------------------------------------
 
@@ -188,13 +195,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `actividadxcolegio`
 --
 ALTER TABLE `actividadxcolegio`
-  MODIFY `id_axc` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_axc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `admin`
