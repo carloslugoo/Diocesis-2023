@@ -70,7 +70,20 @@ def home():
     return render_template('./admin_views/home.html', user = usuario)
   else:
      return render_template('./colegios_views/home.html', user = usuario)
-  
+
+
+#Mis actividades
+#Actividades
+@app.route('/mis_actividades')
+def mis_actividades():
+  usuario = session.get('user_data')
+  mycursor = mydb.cursor()
+  query = "SELECT actividadxcolegio.id_actividad, titulo, fecha FROM actividadxcolegio, actividades WHERE escuela_id = %s and actividadxcolegio.id_actividad = actividades.id_actividad"
+  mycursor.execute(query, (usuario[3],))
+  actividades = mycursor.fetchall()
+  print(actividades)
+  return render_template('./colegios_views/mis_actividades.html', user = usuario, actividades = actividades)
+
 #Actividades
 @app.route('/actividades')
 def actividades():
@@ -108,6 +121,9 @@ def borrar_actividad(id):
   query = "DELETE FROM actividades WHERE id_actividad = %s"
   mycursor.execute(query, (id,))
   mydb.commit()
+  query = "DELETE FROM actividadxcolegio WHERE id_actividad = %s"
+  mycursor.execute(query, (id,))
+  mydb.commit
   return jsonify({"message": "Actividad borrada exitosamente"})
 
 

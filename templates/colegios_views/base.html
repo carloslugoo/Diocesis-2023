@@ -19,31 +19,41 @@
 <body>
  <!--Nav bar -->
  <nav class="navbar navbar-expand-lg bg-success" data-bs-theme="dark">
-    <div class="container">
+  <div class="container">
     <div class="navbar-left">
+      <a class="navbar-brand" href="/"><img src="/static/imagenes/logo.png" width="100" height="100"></a>
       
-        <a class="navbar-brand" href="/"><img src="/static/imagenes/logo.png" width="100" height="100"></a>
-        <a class="nav-link" href="/actividades">Actividades</a>
-        <a class="nav-link" href="#">Institucion</a>
-        <a class="nav-link" href="#">Noticias</a>
-        <a class="nav-link" href="#">Pastoral</a>
-        <a class="nav-link" href="#"></a>
+      <!-- Crear el enlace "Actividades" como un dropdown -->
+      <div class="dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="actividadesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Actividades
+        </a>
+        <div class="dropdown-menu" aria-labelledby="actividadesDropdown">
+          <a class="dropdown-item" href="/actividades">Ver actividades</a>
+          <a class="dropdown-item" href="/mis_actividades">Mis actividades</a>
+        </div>
+      </div>
+      
+      <a class="nav-link" href="#">Institucion</a>
+      <a class="nav-link" href="#">Noticias</a>
+      <a class="nav-link" href="#">Pastoral</a>
+      <a class="nav-link" href="#"></a>
     </div>
-         <div class="container-inline">
-    <div class="dropdown">
-      <a class="nav-link dropdown-toggle text-black" class="" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-           <i class="bi bi-person-fill"></i> {{user.1}}
-          </a>
-      <span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Mis datos</a></li>
-        <li><a class="dropdown-item" href="#">Configuración de cuenta</a></li>
-        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
-      </ul>
+    <div class="container-inline">
+      <div class="dropdown">
+        <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+          <i class="bi bi-person-fill"></i> {{user.1}}
+        </a>
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Mis datos</a></li>
+          <li><a class="dropdown-item" href="#">Configuración de cuenta</a></li>
+          <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+        </ul>
+      </div>
     </div>
   </div>
-    </div>
-  </nav>
+</nav>
   <!---End Nav-->
   {% block content %}{% endblock %}
 <!-- Boostrap JS CDN -->

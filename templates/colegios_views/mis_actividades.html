@@ -1,0 +1,35 @@
+{% if user.3 == 2%}
+    {% extends "./admin_views/base.html" %}
+{%else%}
+    {% extends "./colegios_views/base.html" %}
+{%endif%}
+
+
+<head>
+    <link rel="stylesheet" href="mis_actividades.css">
+    {% block title %}Mis actividades{% endblock %}
+</head>
+{% block content %}
+        <div class="container mt-4">
+            <div class="row">
+            <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+                <div class="lh-1">
+                <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-journal-bookmark"></i> Mis Actividades</h1>
+                <small></small>
+                </div>
+                </div>
+    </div>
+    <div class="row">
+        {% for actividad in actividades %}
+        <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{actividad.1}}</h5>
+                <p class="card-text">{{actividad.2}}</p>
+                <a href="/culimnar_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Culminar</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+    </div>
+    {% endblock %}
