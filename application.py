@@ -163,6 +163,44 @@ def crear_actividad():
       return redirect(url_for('actividades'))
   return render_template('./admin_views/crear_actividades.html', user = usuario)
 
+#Colegios
+@app.route('/colegios')
+def colegios():
+  usuario = session.get('user_data')
+  mycursor = mydb.cursor()
+  mycursor.execute('SELECT * FROM escuelas')
+  res = mycursor.fetchall()
+  i = 0
+  colegios = []
+  for col in res:
+    i += 1
+    col = (*col, i)
+    colegios.append(col)
+  print(colegios)
+  return render_template('colegios.html', user = usuario, colegios = colegios)
+
+#Crear colegio Admin
+@app.route('/crear_colegio', methods=['GET', 'POST'])
+def crear_colegio():
+
+  usuario = session.get('user_data')
+  if request.method == 'POST':
+      # Obtener los datos del formulario
+      nombre = request.form['name']
+      telefono = request.form['tel']
+      celular = request.form['phone']
+      email = request.form['email']
+      direccion = request.form['address']
+      mycursor = mydb.cursor()
+      sql_insert = f"INSERT INTO actividades (titulo, descripcion, objetivos, fecha, id_user) VALUES ({nombre},{telefono},{celular},{email},{direccion})"
+      # Ejecuta la sentencia SQL
+      mycursor.execute(sql_insert)
+      mydb.commit()
+      return redirect(url_for('colegios'))
+  return render_template('./admin_views/crear_colegio.html', user = usuario)
+
+
+
 
 #Este no se va a ver, ya que van a tener cuentas creadas por defecto ya..
 #@app.route('/cargar_accs', methods=['POST', 'GET'])
