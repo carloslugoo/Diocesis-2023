@@ -3,6 +3,87 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
-    <h2>Bienvenido a la página de inicio</h2>
-    <p>Esta es la página de inicio de mi aplicación.</p>
+<div class="container mt-5">
+    <!-- Sección de bienvenida  -->
+    <div class="text-center mb-4">
+        <h1 class="display-4">Bienvenido {{user.1}}</h1>
+        <p class="lead">Controla las actividades y Instituciones desde esta vista</p>
+    </div>
+
+    <!-- Carrusel de actividades -->
+    <h3 class="mb-3">Actividades</h3>
+    <div id="actividadesCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            {% for actividad in actividades %}
+            <li data-bs-target="#actividadesCarousel" data-bs-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}"></li>
+            {% endfor %}
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          {% for actividad in actividades %}
+              {% if loop.index <= 5 %}
+                  <div class="carousel-item {% if loop.first %}active{% endif %}">
+                      <div class="d-flex justify-content-center">
+                          <div class="col-8">
+                              <div class="card" style="height: 350px;">
+                                <div class="card-body">
+                                  <h5 class="card-title">{{ actividad.1 }}</h5>
+                                  <p class="card-text" style="text-align: justify;">{{ actividad.2 }}</p>
+                                  <p class="card-text"><small class="text-muted">{{ actividad.4 }}</small></p>
+                                  <a href="/ver_actividad/{{ actividad.0 }}" class="btn btn-success btn-lg btn-block card-button">Ver actividad</a>
+                              </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              {% endif %}
+          {% endfor %}
+          <!-- Tarjeta final para 'Ver más' siempre visible -->
+          <div class="carousel-item">
+              <div class="d-flex justify-content-center">
+                  <div class="col-8">
+                      <div class="card" style="height: 350px;">
+                          <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                              <h5 class="card-title">Ver más actividades</h5>
+                              <p class="card-text">Explora todas las actividades disponibles.</p>
+                              <a href="/actividades" class="btn btn-primary btn-lg">Ver más</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#actividadesCarousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#actividadesCarousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </a>
+    </div>
+
+    <!-- Lista de Instituciones -->
+    <h3 class="mb-3">Lista de Instituciones</h3>
+    <div class="row">
+        {% for colegio in colegios %}
+            {% if loop.index0 is divisibleby 10 %}
+                {% if not loop.first %}</div>{% endif %}
+                <div class="col-md-3 mb-4">
+                    <ul class="list-group">
+            {% endif %}
+            <li class="list-group-item">
+                <a href="/ver_colegio/{{ colegio.0 }}">{{ colegio.1 }}</a>
+            </li>
+            {% if loop.last %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div> 
 {% endblock %}

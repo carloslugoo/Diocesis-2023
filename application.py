@@ -67,7 +67,14 @@ def home():
   usuario = session.get('user_data')
   #print(usuario)
   if usuario[3] == 2:
-    return render_template('./admin_views/home.html', user = usuario)
+    usuario = session.get('user_data')
+    mycursor = mydb.cursor()
+    mycursor.execute('SELECT * FROM actividades')
+    actividades = mycursor.fetchall()
+    mycursor = mydb.cursor()
+    mycursor.execute('SELECT * FROM escuelas')
+    colegios = mycursor.fetchall()   
+    return render_template('./admin_views/home.html', user = usuario, actividades = actividades, colegios = colegios)
   else:
      return render_template('./colegios_views/home.html', user = usuario)
 
