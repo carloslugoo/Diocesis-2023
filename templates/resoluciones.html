@@ -12,15 +12,10 @@
 {% if user.3 == 2%}
 <div class="container mt-4">
     <div class="row">
-        <h4>Cargar una resolución nueva:</h4>
-        <div class="col-5  text-right d-flex align-items-center">
-            <form action="/upload" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
-                <input type="file" class="btn btn-success btn-lg" name="archivo" accept=".pdf" style="margin-right: 10px;">
-                <button type="submit" class="btn btn-success btn-lg"> <i class="bi bi-upload"></i></button>
-            </form>
+        <div class="col-3 text-right">
+            <a href="/cargar_resolucion" class="btn btn-success btn-lg btn-block">Cargar resolución</a>
         </div>
-    </div>
-</div>
+
 {%endif%}
  <div class="container mt-4">
                 <div class="row">
@@ -31,13 +26,13 @@
                     </div>
                  </div>
 </div>
-        {% for actividad in actividades %}
+        {% for resolucion in resoluciones %}
         <div class="card">
             <div class="card-body">
-            <h5 class="card-title">{{actividad.1 }}</h5>
-            <p class="card-text" style="text-align: justify;">{{ actividad.2}}</p>
-            <p class="card-text"><small class="text-muted">{{ actividad.4}}</small></p>
-            <a href="/ver_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Ver resolución</a>
+            <h5 class="card-title">{{resolucion.3 }}</h5>
+            <p class="card-text" style="text-align: justify;">{{ resolucion.4}}</p>
+            <p class="card-text"><small class="text-muted">{{ resolucion.5}}</small></p>
+            <a href="#" class="btn btn-success btn-lg btn-block btn-block card-button">Ver documento</a>
         </div>
         </div>
     <br>

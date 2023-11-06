@@ -101,32 +101,6 @@ def actividades():
   actividades = mycursor.fetchall()
   return render_template('actividades.html', user = usuario, actividades = actividades)
 
-#Actividades
-@app.route('/resoluciones')
-def reesoluciones():
-  usuario = session.get('user_data')
-  mycursor = mydb.cursor()
-  #mycursor.execute('SELECT * FROM actividades')
-  #actividades = mycursor.fetchall()
-  return render_template('resoluciones.html', user = usuario)
-# Ruta para cargar el archivo
-
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'archivo' not in request.files:
-        return "No se ha proporcionado ningún archivo"
-
-    archivo = request.files['archivo']
-
-    if archivo.filename == '':
-        return "Nombre de archivo no válido"
-
-    if archivo and archivo.filename.endswith('.pdf'):
-        archivo.save(os.path.join('resoluciones', archivo.filename))
-        return "Archivo subido correctamente"
-    else:
-        return "Por favor, sube un archivo .pdf"
-  
 #Ver actividad
 @app.route('/ver_actividad/<int:id>')
 def ver_actividad(id):
@@ -197,6 +171,62 @@ def crear_actividad():
       return redirect(url_for('actividades'))
   return render_template('./admin_views/crear_actividades.html', user = usuario)
 
+#Resoluciones
+@app.route('/resoluciones')
+def resoluciones():
+  usuario = session.get('user_data')
+  mycursor = mydb.cursor()
+  mycursor.execute('SELECT * FROM resoluciones')
+  resoluciones = mycursor.fetchall()
+  return render_template('resoluciones.html', user = usuario, resoluciones = resoluciones)
+
+@app.route('/cargar_resolucion', methods=['GET', 'POST'])
+def cargar_resolucion():
+  usuario = session.get('user_data')
+  print(usuario)
+  if request.method == 'POST':
+      # Obtener los datos del formulario
+      titulo = request.form['title']
+      descripcion = request.form['description']
+      objetivos = request.form['objectives']
+      fecha_realizacion = request.form['date']
+      mycursor = mydb.cursor()
+      sql_insert = "INSERT INTO actividades (titulo, descripcion, objetivos, fecha, id_user) VALUES (%s, %s, %s, %s, %s)"
+      valores = (titulo, descripcion, objetivos, fecha_realizacion, usuario[3])
+      # Ejecuta la sentencia SQL
+      mycursor.execute(sql_insert, valores)
+      mydb.commit()
+      return redirect(url_for('actividades'))
+  return render_template('./admin_views/crear_resolucion.html', user = usuario)
+# Ruta para cargar el archivo
+#Subir resoluciones #ADMIN
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+      import datetime
+      # Obtener los datos del formulario
+      titulo = request.form['title']
+      descripcion = request.form['description']
+      usuario = session.get('user_data')
+      # Obtén la fecha y hora actual
+      fecha_actual = datetime.datetime.now()
+      # Formatea la fecha en el formato adecuado para SQL (YYYY-MM-DD HH:MM:SS)
+      fecha_formateada = fecha_actual.strftime('%Y-%m-%d')
+      if 'archivo' not in request.files:
+          return jsonify({"error": "Error de archivo"}), 400  # 400: Bad Request
+      archivo = request.files['archivo']
+      if archivo.filename == '':
+          return jsonify({"error": "Nombre de archivo vacío"}), 400  # 400: Bad Request
+      if archivo and archivo.filename.endswith('.pdf'):
+          archivo.save(os.path.join('resoluciones', archivo.filename))
+          mycursor = mydb.cursor()
+          mycursor.execute('INSERT INTO resoluciones (id_user, filename, titulo, des, date) VALUES (%s, %s, %s, %s, %s)',
+                          (usuario[3], archivo.filename, titulo, descripcion, fecha_formateada))
+          mydb.commit()
+          return jsonify({"message": "Archivo cargado exitosamente"}), 200  # 200: OK
+      else:
+          return jsonify({"error": "Formato de archivo inválido"}), 415  # 415: Unsupported Media Type
+  
 #Colegios
 @app.route('/colegios')
 def colegios():
