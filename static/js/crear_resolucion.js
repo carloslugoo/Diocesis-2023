@@ -15,7 +15,7 @@ document.querySelector('form').addEventListener('submit', async function (event)
                 Swal.fire('Error', 'Ocurrió un error en la carga del archivo', 'error');
             }
         } else {
-            Swal.fire('Éxito', 'Archivo cargado exitosamente', 'success');
+            //Swal.fire('Éxito', 'Archivo cargado exitosamente', 'success');
             // Aquí puedes realizar otras acciones si la carga fue exitosa
             window.location.href = "/resoluciones";
         }

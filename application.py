@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect, render_template, request, session, jsonify
+from flask import Flask, url_for, redirect, render_template, request, session, jsonify, send_file, make_response
 from config import DevConfig
 
 #Encriptar la pass
@@ -226,6 +226,14 @@ def upload_file():
           return jsonify({"message": "Archivo cargado exitosamente"}), 200  # 200: OK
       else:
           return jsonify({"error": "Formato de archivo inválido"}), 415  # 415: Unsupported Media Type
+
+@app.route('/open_pdf/<filename>')
+def open_pdf(filename):
+    ruta_al_archivo = f"resoluciones/{filename}" 
+    # Abre el archivo en una nueva pestaña
+    response = make_response(send_file(ruta_al_archivo, as_attachment=False))
+    response.headers['Content-Disposition'] = 'inline'
+    return response
   
 #Colegios
 @app.route('/colegios')
