@@ -4,6 +4,7 @@ from config import DevConfig
 #Encriptar la pass
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
+import os
 
 #SQL
 import mysql.connector
@@ -100,6 +101,32 @@ def actividades():
   actividades = mycursor.fetchall()
   return render_template('actividades.html', user = usuario, actividades = actividades)
 
+#Actividades
+@app.route('/resoluciones')
+def reesoluciones():
+  usuario = session.get('user_data')
+  mycursor = mydb.cursor()
+  #mycursor.execute('SELECT * FROM actividades')
+  #actividades = mycursor.fetchall()
+  return render_template('resoluciones.html', user = usuario)
+# Ruta para cargar el archivo
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'archivo' not in request.files:
+        return "No se ha proporcionado ningún archivo"
+
+    archivo = request.files['archivo']
+
+    if archivo.filename == '':
+        return "Nombre de archivo no válido"
+
+    if archivo and archivo.filename.endswith('.pdf'):
+        archivo.save(os.path.join('resoluciones', archivo.filename))
+        return "Archivo subido correctamente"
+    else:
+        return "Por favor, sube un archivo .pdf"
+  
 #Ver actividad
 @app.route('/ver_actividad/<int:id>')
 def ver_actividad(id):
