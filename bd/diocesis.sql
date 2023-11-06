@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2023 a las 20:30:00
+-- Tiempo de generación: 06-11-2023 a las 16:02:18
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -109,6 +109,28 @@ INSERT INTO `escuelas` (`escuela_id`, `nmb_esc`, `celu_esc`, `email_esc`, `direc
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `resoluciones`
+--
+
+CREATE TABLE `resoluciones` (
+  `id_res` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `filename` int(11) NOT NULL,
+  `titulo` varchar(80) NOT NULL,
+  `des` varchar(150) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `resoluciones`
+--
+
+INSERT INTO `resoluciones` (`id_res`, `id_user`, `filename`, `titulo`, `des`, `date`) VALUES
+(2, 2, 0, 'Test resolucion N1245 SDDA', 'Test resolucion N1245 SDDA Test resolucion N1245 SDDA Test resolucion N1245 SDDA Test resolucion N1245 SDDA Test resolucion N1245 SDDA Test resolucion', '2023-11-06');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipos_usuarios`
 --
 
@@ -176,6 +198,12 @@ ALTER TABLE `escuelas`
   ADD PRIMARY KEY (`escuela_id`);
 
 --
+-- Indices de la tabla `resoluciones`
+--
+ALTER TABLE `resoluciones`
+  ADD PRIMARY KEY (`id_res`);
+
+--
 -- Indices de la tabla `tipos_usuarios`
 --
 ALTER TABLE `tipos_usuarios`
@@ -214,6 +242,12 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `escuelas`
   MODIFY `escuela_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `resoluciones`
+--
+ALTER TABLE `resoluciones`
+  MODIFY `id_res` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_usuarios`
