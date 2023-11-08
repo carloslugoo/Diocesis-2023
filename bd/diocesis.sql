@@ -92,6 +92,7 @@ INSERT INTO `admin` (`id_admin`, `nmb_admin`, `id_user`) VALUES
 CREATE TABLE `escuelas` (
   `escuela_id` int(11) NOT NULL,
   `nmb_esc` varchar(40) NOT NULL,
+  `tel_escu` varchar(20) NOT NULL,
   `celu_esc` varchar(20) NOT NULL,
   `email_esc` varchar(25) NOT NULL,
   `direc_esc` varchar(40) NOT NULL,
