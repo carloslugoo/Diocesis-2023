@@ -278,7 +278,7 @@ def crear_colegio():
       email = request.form['email']
       direccion = request.form['address']
       mycursor = mydb.cursor()
-      sql_insert = f"INSERT INTO actividades (titulo, descripcion, objetivos, fecha, id_user) VALUES ({nombre},{telefono},{celular},{email},{direccion})"
+      sql_insert = f"INSERT INTO escuelas (nmb_esc, tel_escu, celu_esc, email_esc, direc_esc, id_user) VALUES ('{nombre}',{telefono},{celular},'{email}','{direccion}',{usuario[0]})"
       # Ejecuta la sentencia SQL
       mycursor.execute(sql_insert)
       mydb.commit()
