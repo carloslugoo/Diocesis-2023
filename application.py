@@ -70,14 +70,28 @@ def home():
   if usuario[3] == 2:
     usuario = session.get('user_data')
     mycursor = mydb.cursor()
-    mycursor.execute('SELECT * FROM actividades')
+    mycursor.execute('SELECT * FROM actividades ORDER BY fecha DESC LIMIT 5')
     actividades = mycursor.fetchall()
     mycursor = mydb.cursor()
     mycursor.execute('SELECT * FROM escuelas')
-    colegios = mycursor.fetchall()   
-    return render_template('./admin_views/home.html', user = usuario, actividades = actividades, colegios = colegios)
+    colegios = mycursor.fetchall()
+    mycursor = mydb.cursor()
+    mycursor.execute('SELECT * FROM resoluciones ORDER BY date DESC LIMIT 3')
+    resoluciones = mycursor.fetchall()   
+    return render_template('./admin_views/home.html', user = usuario, actividades = actividades, colegios = colegios,resoluciones = resoluciones)
   else:
-     return render_template('./colegios_views/home.html', user = usuario)
+    mycursor = mydb.cursor()
+    query = "SELECT actividadxcolegio.id_actividad, titulo, fecha FROM actividadxcolegio, actividades WHERE escuela_id = %s and actividadxcolegio.id_actividad = actividades.id_actividad ORDER BY fecha DESC LIMIT 3"
+    mycursor.execute(query, (usuario[3],))
+    actividades = mycursor.fetchall()
+    mycursor = mydb.cursor()
+    mycursor.execute('SELECT * FROM resoluciones ORDER BY date DESC LIMIT 3')
+    resoluciones = mycursor.fetchall()
+    mycursor = mydb.cursor()
+    query = "SELECT actividadxcolegio.id_actividad, titulo, fecha FROM actividadxcolegio, actividades WHERE escuela_id = %s and actividadxcolegio.id_actividad != actividades.id_actividad ORDER BY fecha DESC LIMIT 3"
+    mycursor.execute(query, (usuario[3],))
+    disponibles = mycursor.fetchall()
+    return render_template('./colegios_views/home.html', user = usuario,actividades=actividades,resoluciones = resoluciones,disponibles= disponibles)
 
 
 #Mis actividades

@@ -3,6 +3,104 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
-    <h2>Bienvenido a la página de inicio</h2>
-    <p>Esta es la página de inicio de mi aplicación.</p>
+<div class="container mt-5">
+    <!-- Sección de bienvenida  -->
+    <div class="text-center mb-4">
+        <h1 class="display-4">Bienvenido {{user.1}}</h1>
+        <p class="lead">Controla las Actividades y Resoluciones desde esta vista</p>
+    </div>
+
+    <!-- Carrusel de actividades -->
+    <h1 class="mb-3">Mis Actividades</h1>
+    <div id="actividadesCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            {% for actividad in actividades %}
+            <li data-bs-target="#actividadesCarousel" data-bs-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}"></li>
+            {% endfor %}
+            <li data-bs-target="#actividadesCarousel" data-bs-slide-to="{{ actividades|length }}"></li>
+        </ol>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            {% for actividad in actividades %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <div class="d-flex justify-content-center">
+                    <div class="col-8">
+                        <div class="card" style="height: 350px;">
+                          <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                            <h5 class="card-title">{{ actividad.1 }}</h5>
+                            <p class="card-text">{{ actividad.2 }}</p>
+                            <p class="card-text"><small class="text-muted">{{ actividad.4 }}</small></p>
+                            <a href="/ver_actividad/{{ actividad.0 }}" class="btn btn-success btn-lg btn-block card-button">Ver actividad</a>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- Otro Item -->
+            <div class="carousel-item">
+                <div class="d-flex justify-content-center">
+                    <div class="col-8">
+                        <div class="card" style="height: 350px;">
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                <h5 class="card-title">Ver más actividades</h5>
+                                <p class="card-text">Explora todas las actividades disponibles.</p>
+                                <a href="/actividades" class="btn btn-success btn-lg">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#actividadesCarousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#actividadesCarousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </a>
+    </div>
+    <div class="row">
+        <h1>Actividades Disponibles</h1>
+    </div>
+    <div class="row">
+        {% for disponible in disponibles %}
+        <div class="col-4">
+            <div class="card" style="height: 350px;">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                  <h5 class="card-title">{{ disponible.1 }}</h5>
+                  <p class="card-text">{{ disponible.2 }}</p>
+                  <p class="card-text"><small class="text-muted">{{ disponible.4 }}</small></p>
+                  <a href="/ver_actividad/{{ disponible.0 }}" class="btn btn-success btn-lg btn-block card-button">Inscribirse</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <p> </p>
+    <div class="row">
+        <div class="col-10">
+            <h1>Ultimas Resoluciones</h1>
+        </div>
+        <div class="col-2">
+            <a href="/resoluciones" class="btn btn-success btn-lg w-100">Ver Mas</a>
+        </div>
+    </div>
+    <div class="row">
+        {% for resolucion in resoluciones %}
+        <div class="col-4">
+            <div class="card" style="height: 350px;">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <p class="card-text" style="text-align: justify;">{{ resolucion.4 }}</p>
+                    <p class="card-text"><small class="text-muted">{{ resolucion.5 }}</small></p>
+                    <a href="{{ url_for('open_pdf', filename=resolucion.2) }}" target="_blank" class="btn btn-success btn-lg btn-block card-button">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div> 
 {% endblock %}
