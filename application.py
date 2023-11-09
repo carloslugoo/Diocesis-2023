@@ -212,6 +212,16 @@ def cargar_resolucion():
       mydb.commit()
       return redirect(url_for('actividades'))
   return render_template('./admin_views/crear_resolucion.html', user = usuario)
+#Borrar resolucion ADMIN
+@app.route('/borrar_resolucion/<int:id>', methods=['DELETE'])
+def borrar_resolucion(id):
+  print("Borrar resolucion", id)
+  mycursor = mydb.cursor()
+  query = "DELETE FROM resoluciones WHERE id_res = %s"
+  mycursor.execute(query, (id,))
+  mydb.commit()
+  return jsonify({"message": "Resolucion borrada exitosamente"})
+
 # Ruta para cargar el archivo
 #Subir resoluciones #ADMIN
 @app.route('/upload', methods=['POST'])
