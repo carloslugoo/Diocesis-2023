@@ -236,6 +236,7 @@ def open_pdf(filename):
     return response
   
 #Colegios
+#Listar Colegios
 @app.route('/colegios')
 def colegios():
   usuario = session.get('user_data')
@@ -254,8 +255,8 @@ def colegios():
 #Crear colegio Admin
 @app.route('/crear_colegio', methods=['GET', 'POST'])
 def crear_colegio():
-
   usuario = session.get('user_data')
+  mycursor = mydb.cursor()
   if request.method == 'POST':
       # Obtener los datos del formulario
       nombre = request.form['name']
@@ -263,15 +264,25 @@ def crear_colegio():
       celular = request.form['phone']
       email = request.form['email']
       direccion = request.form['address']
-      mycursor = mydb.cursor()
       sql_insert = f"INSERT INTO escuelas (nmb_esc, tel_escu, celu_esc, email_esc, direc_esc, id_user) VALUES ('{nombre}',{telefono},{celular},'{email}','{direccion}',{usuario[0]})"
       # Ejecuta la sentencia SQL
       mycursor.execute(sql_insert)
       mydb.commit()
       return redirect(url_for('colegios'))
-  return render_template('./admin_views/crear_colegio.html', user = usuario)
+  mycursor.execute('SELECT id_user,user FROM usuarios')
+  users = mycursor.fetchall()
+  return render_template('./admin_views/crear_colegio.html', user = usuario, users = users)
 
-
+#Ver Colegio
+@app.route('/ver_colegio/<int:id>')
+def ver_coelgio(id):
+  usuario = session.get('user_data')
+  mycursor = mydb.cursor()
+  #query de info de actividad
+  query = f"SELECT nmb_esc, tel_escu, celu_esc, email_esc, direc_esc, user FROM escuelas, usuarios WHERE escuela_id = {id} and escuelas.id_user=usuarios.id_user"
+  mycursor.execute(query)
+  colegio = mycursor.fetchone()
+  return render_template('ver_colegio.html', user = usuario, colegio = colegio, personal = "")
 
 
 #Este no se va a ver, ya que van a tener cuentas creadas por defecto ya..

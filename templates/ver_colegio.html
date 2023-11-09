@@ -1,54 +1,75 @@
-{% if user.3 == 2%}
-    {% extends "./admin_views/base.html" %}
-{%else%}
-    {% extends "./colegios_views/base.html" %}
-{%endif%}
-<head>
-    {% block title %}Ver Actividad{% endblock %}
-    <link rel="stylesheet" href="/static/css/ver_actividades.css">
-</head>
+{% extends "./admin_views/base.html" %}
 
+{% block title %}Inspeccionar {{colegio.0}}{% endblock %}
 
 {% block content %}
-<br>
-<div class="container">
-    <div class="row">
-        <!-- Parte Derecha: Detalles de la Actividad -->
-        <div class="col-md-7 bg-white rounded shadow-sm">
-                <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
-            <div class="lh-1">
-            <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-journal-bookmark"></i> {{actividad.1}}</h1>
-            <small>Propuesto por: {{actividad.5}} para la fecha: {{actividad.4}}</small>
-            </div>
-            </div>
-                <hr>
-                <p>Descripción de la Actividad:</p>
-                <p style="text-align: justify;">{{actividad.2}}</p>
-                <hr>
-                <p>Objetivos de la Actividad:</p>
-                <p style="text-align: justify;">{{actividad.3}}</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<div class="container mt-4">
+    <h2>Crear Colegio</h2>
+    <form method="POST" action="/crear_colegio">
+        <div class="form-group">
+            <label for="name">Nombre del colegio</label>
+            <p class="form-control">{{colegio.0}}</p>
         </div>
-        <div class="col-md-4 bg-white rounded shadow-sm" style="margin-left: 10px;">
-            <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
-                <div class="lh-1">
-                <h1 class="h3 mb-0 text-black lh-1">Colegios adheridos</h1>
-                </div>
-            </div>
-            <small>Ningun colegio realizo esta actividad...</small>
+        {% if colegio.1 != ""%}
+        <div class="form-group">
+            <label for="tel">Número de teléfono</label>
+            <p class="form-control">{{colegio.1}}</p>
+        </div>
+        {% endif %}
+        {% if colegio.2 != ""%}
+        <div class="form-group">
+            <label for="phone">Número de teléfono celular</label>
+            <p class="form-control">{{colegio.2}}</p>
+        </div>
+        {% endif %}
+        {% if colegio.3 != ""%}
+        <div class="form-group">
+            <label for="email">Email</label>
+            <p class="form-control">{{colegio.3}}</p>
+        </div>
+        {% endif %}
+        {% if colegio.4 != ""%}
+        <div class="form-group">
+            <label for="address">Dirección</label>
+            <p class="form-control">{{colegio.4}}</p>
+        </div>
+        {% endif %}
+        <div class="mt-3 mb-2 col-md-4 p-1">
+            <label for="user_asig" class="form-label">Usuario Encargado</label>
+            <p class="form-control">{{colegio.5}}</p>
+        </div>
+        <br>
+        <!-- <button type="submit" class="btn btn-success btn-lg btn-block">Guardar Colegio</button> -->
 
-        </div>
-     
-        <div class="col-md-4">
-            <br>
-            {% if user.3 == 2%}
-            <button onclick="confirmDelete('{{actividad.0}}')" class="btn btn-success btn-lg btn-block btn-block card-button">Borrar Actividad</button>
-            {%else%}
-            <a href="/paticipar_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Borrar actividad</a>
-            {%endif%}
-        </div>
-        
-        
-    </div>
+        <!-- h2 class="text-center">Personal del Colegio</h2>
+        <div class="col-md-12 column">
+            <table class="table table-bordered" id="tabla_personal">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Nombre y apellido</th>
+                        <th class="text-center">Teléfono Celular</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Tipo de personal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id='addr_{{data_det | length }}_tabla_personal'>
+                        <td class="text-center align-middle">{{data_det | length + 1 }}</td>
+                        <td hidden><input type="text" id='id_personal' name="id_personal" class="form-control det" />
+                        </td>
+                        <td><p class="form-control">{{personal.1}}</p></td>
+                        <td><p class="form-control">{{personal.2}}</p></td>
+                        <td><p class="form-control">{{personal.3}}</p></td>
+                        <td><p class="form-control">{{personal.4}}</p></td>
+                        <td><p class="form-control">{{personal.5}}</p></td>
+                    </tr>
+                    <tr id='addr_{{data_det | length + 1 }}_tabla_personal'>
+                </tbody>
+            </table> -->
+    </form>
 </div>
-<script src="/static/js/ver_actividades.js"></script>
+<script type="text/javascript" id="agrega_row"
+    src="{{url_for('static', filename='js/agrega_row_tabla_det.js')}}"></script>
 {% endblock %}
