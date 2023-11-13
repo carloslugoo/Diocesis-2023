@@ -88,9 +88,10 @@ def home():
     mycursor.execute('SELECT * FROM resoluciones ORDER BY date DESC LIMIT 3')
     resoluciones = mycursor.fetchall()
     mycursor = mydb.cursor()
-    query = "SELECT actividadxcolegio.id_actividad, titulo, fecha FROM actividadxcolegio, actividades WHERE escuela_id = %s and actividadxcolegio.id_actividad != actividades.id_actividad ORDER BY fecha DESC LIMIT 3"
+    query = "SELECT actividades.id_actividad, titulo, fecha FROM actividadxcolegio, actividades WHERE escuela_id = %s and actividadxcolegio.id_actividad != actividades.id_actividad ORDER BY fecha DESC LIMIT 3"
     mycursor.execute(query, (usuario[3],))
     disponibles = mycursor.fetchall()
+    print(disponibles)
     return render_template('./colegios_views/home.html', user = usuario,actividades=actividades,resoluciones = resoluciones,disponibles= disponibles)
 
 
@@ -212,6 +213,7 @@ def cargar_resolucion():
       mydb.commit()
       return redirect(url_for('actividades'))
   return render_template('./admin_views/crear_resolucion.html', user = usuario)
+
 #Borrar resolucion ADMIN
 @app.route('/borrar_resolucion/<int:id>', methods=['DELETE'])
 def borrar_resolucion(id):

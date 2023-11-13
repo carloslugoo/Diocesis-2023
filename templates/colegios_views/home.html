@@ -11,7 +11,12 @@
     </div>
 
     <!-- Carrusel de actividades -->
-    <h1 class="mb-3">Mis Actividades</h1>
+    <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+        <div class="lh-1">
+        <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-journal-bookmark"></i> Actividades</h1>
+        <small></small>
+        </div>
+        </div>
     <div id="actividadesCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -63,8 +68,11 @@
             <span class="visually-hidden">Siguiente</span>
         </a>
     </div>
-    <div class="row">
-        <h1>Actividades Disponibles</h1>
+    <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+        <div class="lh-1">
+        <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-journal-plus"></i> Actividades disponibles</h1>
+        <small></small>
+        </div>
     </div>
     <div class="row">
         {% for disponible in disponibles %}
@@ -82,12 +90,12 @@
     </div>
     <p> </p>
     <div class="row">
-        <div class="col-10">
-            <h1>Ultimas Resoluciones</h1>
-        </div>
-        <div class="col-2">
-            <a href="/resoluciones" class="btn btn-success btn-lg w-100">Ver Mas</a>
-        </div>
+        <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+            <div class="lh-1">
+            <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-card-heading"></i> Resoluciones</h1>
+            <small></small>
+            </div>
+            </div>
     </div>
     <div class="row">
         {% for resolucion in resoluciones %}
@@ -102,5 +110,12 @@
         </div>
         {% endfor %}
     </div>
+    <br>
+    <div class="col-2">
+        <br>
+        <a href="/resoluciones" class="btn btn-success btn-lg w-100">Ver Mas</a>
+       
+</div>
+
 </div> 
 {% endblock %}

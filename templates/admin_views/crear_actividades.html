@@ -1,10 +1,17 @@
 {% extends "./admin_views/base.html" %}
 
-{% block title %}Crear aaactividad{% endblock %}
+{% block title %}Crear actividad{% endblock %}
 
 {% block content %}
     <div class="container mt-4">
-        <h2>Crear nueva actividad</h2>
+        <div class="row">
+            <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+                <div class="lh-1">
+                <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-journal-plus"></i> Crear actividad</h1>
+                <small></small>
+                </div>
+                </div>
+        </div>
         <form method="POST" action="/crear_actividad">
             <div class="form-group">
                 <label for="title">Título de la Actividad</label>

@@ -5,10 +5,17 @@
 {% block content %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <div class="container mt-4">
-    <h2>Crear Colegio</h2>
+    <div class="row">
+        <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+            <div class="lh-1">
+            <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-plus-circle"></i> Crear instituciones</h1>
+            <small></small>
+            </div>
+            </div>
+        </div>
     <form method="POST" action="/crear_colegio">
         <div class="form-group">
-            <label for="name">Nombre del colegio</label>
+            <label for="name">Nombre del institución</label>
             <input type="text" class="form-control" id="name" name="name" required>
         </div>
         <div class="form-group">

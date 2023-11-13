@@ -5,7 +5,13 @@
 {% block content %}
 <div class="container mt-4">
     <div class="row">
-        <h4>Cargar una resolución nueva:</h4>
+        <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+            <div class="lh-1">
+            <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-envelope-plus-fill"></i> Crear resolución</h1>
+            <small></small>
+            </div>
+            </div>
+        </div>
         <div class="col-5  text-right d-flex align-items-center">
             <form action="/upload" method="post" enctype="multipart/form-data">
                 <div class="form-group">
