@@ -39,7 +39,7 @@
             <select id="user_asig" class="form-select" name="user_asig">
                 <option selected value="" selected>Seleccionar Usuario</option>
                 {%for user in users%}
-                <option value={{user[0]}}>{{user[1]}}</option>
+                <option value={{user.0}}>{{user.1}}</option>
                 {%endfor%}
             </select>
         </div>

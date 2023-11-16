@@ -303,6 +303,7 @@ def crear_colegio():
       return redirect(url_for('colegios'))
   mycursor.execute('SELECT id_user,user FROM usuarios')
   users = mycursor.fetchall()
+  print(users)
   return render_template('./admin_views/crear_colegio.html', user = usuario, users = users)
 
 #Ver Colegio
@@ -315,6 +316,37 @@ def ver_colegio(id):
   mycursor.execute(query, (id,))
   colegio = mycursor.fetchone()
   return render_template('ver_colegio.html', user = usuario, colegio = colegio, personal = "")
+
+#Cuentas (Configuracion de Colegios y Usuarios)
+@app.route('/panelcuentas')
+def cuentas():
+  usuario = session.get('user_data')
+  #Usuarios No Asignados a Ninguna Escuela
+  mycursor = mydb.cursor()
+  mycursor.execute("SELECT usuarios.id_user, usuarios.user, usuarios.id_tipo_user FROM usuarios WHERE usuarios.id_user NOT IN ( SELECT escuelas.id_user FROM escuelas WHERE escuelas.id_user IS NOT NULL);")
+  usuarios = mycursor.fetchall()
+  #Escuelas con sus Usuarios Asignados
+  mycursor = mydb.cursor()
+  mycursor.execute('SELECT escuelas.nmb_esc, usuarios.user FROM usuarios INNER JOIN escuelas ON usuarios.id_user = escuelas.id_user;')
+  colegios = mycursor.fetchall()
+  return render_template('./admin_views/panel_cuentas.html',user = usuario, usuarios = usuarios, colegios = colegios)
+
+@app.route('/add_user', methods=['POST', 'GET'])
+def add_user():
+  usuario = session.get('user_data')
+  if request.method == 'POST':
+        user_save = request.form.get('Nombre_Usuario')
+        contrasena = request.form.get('Contrasena_Usuario')
+        tipo_usuario = request.form.get('Tipo_Usuario')
+        contrasena_hash = createpassword(contrasena)
+        print(user_save, contrasena, tipo_usuario,contrasena_hash)
+        mycursor = mydb.cursor()
+        query = "INSERT INTO usuarios (user, password, id_tipo_user) VALUES (%s, %s, %s)"
+        user_datos = (user_save, contrasena_hash,tipo_usuario)
+        # Ejecuta la sentencia SQL
+        mycursor.execute(query, user_datos)
+        mydb.commit()
+  return redirect(url_for('cuentas'))
 
 #Logout
 @app.route('/logout')

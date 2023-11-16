@@ -1,0 +1,102 @@
+{% extends "./admin_views/base.html" %}
+
+{% block title %}Panel de Cuentas{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+            <div class="lh-1">
+            <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-person-fill"></i> Panel de Cuentas</h1>
+            <small></small>
+            </div>
+        </div>
+    </div>
+    <!-- Usuarios -->
+    <div class="row">
+        <div class="col-md-4 bg-white rounded shadow-sm p-4 my-4">
+            <h1 class="text-black">Usuarios sin Asignar</h1>
+            <a class="btn btn-success my-2" data-bs-toggle="modal" data-bs-target="#userModal">Añadir Nuevo Usuario</a>
+            <!-- Lista de Usuarios -->
+            {% for usuario in usuarios %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <p class="card-text text-muted">Nombre</p>
+                    <h4 class="card-title">{{ usuario.1 }}</h4>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Colegios -->
+            <div class="col-md-8 bg-white rounded shadow-sm p-4 my-4">
+                <h1 class="text-black">Colegios</h1>
+                {% for colegio in colegios %}
+                {% if loop.index0 % 2 == 0 %}
+                <div class="row">
+                {% endif %}
+                    <div class="col-md-6">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <p class="card-text text-muted">Institucion</p>
+                                <h4 class="card-title">{{ colegio.0 }}</h4>
+                                <p class="card-text text-muted">Encargado</p>
+                                <h4 class="card-title">{{ colegio.1 }}</h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                {% if loop.index % 2 == 0 or loop.last %}
+                </div> <!-- Cierre de fila -->
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Cabecera del modal -->
+            <div class="modal-header">
+            <h5 class="modal-title" id="userModalLabel">Nuevo Usuario</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- Cuerpo del modal -->
+            <form action="/add_user" method="POST">
+            <div class="modal-body">
+                <!-- Campo de nombre -->
+                <div class="mb-3">
+                <label for="userName" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="Nombre_Usuario" name="Nombre_Usuario" required>
+                </div>
+                <!-- Campo de contraseña -->
+                <div class="mb-3">
+                <label for="userPassword" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="Contrasena_Usuario" name="Contrasena_Usuario" required>
+                </div>
+                <!-- Selector de tipo de usuario -->
+                <div class="mb-3">
+                <label for="userType" class="form-label">Tipo de Usuario</label>
+                <select class="form-select" id="Tipo_Usuario" name="Tipo_Usuario" required>
+                    <option value="1" selected>Normal</option>
+                    <option value="2">Administrador</option>
+                </select>
+                </div>
+            
+            </div>
+            <!-- Pie de página del modal -->
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-success">Guardar Usuario</button>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
+
+
+    </div>
+    
+
+{% endblock %}
