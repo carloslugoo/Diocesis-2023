@@ -68,30 +68,36 @@ def home():
   usuario = session.get('user_data')
   #print(usuario)
   if usuario[3] == 2:
+    #Query Todas las Actividades (Admin)
     usuario = session.get('user_data')
     mycursor = mydb.cursor()
     mycursor.execute('SELECT * FROM actividades ORDER BY fecha DESC LIMIT 5')
     actividades = mycursor.fetchall()
+    #Query Todas las Instituciones (Admin)
     mycursor = mydb.cursor()
     mycursor.execute('SELECT * FROM escuelas')
     colegios = mycursor.fetchall()
     mycursor = mydb.cursor()
+    #Query Todas las Resoluciones (Admin)
     mycursor.execute('SELECT * FROM resoluciones ORDER BY date DESC LIMIT 3')
     resoluciones = mycursor.fetchall()   
     return render_template('./admin_views/home.html', user = usuario, actividades = actividades, colegios = colegios,resoluciones = resoluciones)
   else:
+    #Query Actividades Que Participa (User)
     mycursor = mydb.cursor()
     query = "SELECT actividadxcolegio.id_actividad, titulo, fecha FROM actividadxcolegio, actividades WHERE escuela_id = %s and actividadxcolegio.id_actividad = actividades.id_actividad ORDER BY fecha DESC LIMIT 3"
     mycursor.execute(query, (usuario[3],))
     actividades = mycursor.fetchall()
+    #Query Todas las Resoluciones (User)
     mycursor = mydb.cursor()
     mycursor.execute('SELECT * FROM resoluciones ORDER BY date DESC LIMIT 3')
     resoluciones = mycursor.fetchall()
+    #Query Todas las Actividades Disponibles / Por Participar (User)
     mycursor = mydb.cursor()
     query = "SELECT actividades.id_actividad, titulo, fecha FROM actividadxcolegio, actividades WHERE escuela_id = %s and actividadxcolegio.id_actividad != actividades.id_actividad ORDER BY fecha DESC LIMIT 3"
     mycursor.execute(query, (usuario[3],))
     disponibles = mycursor.fetchall()
-    print(disponibles)
+    #print(disponibles)
     return render_template('./colegios_views/home.html', user = usuario,actividades=actividades,resoluciones = resoluciones,disponibles= disponibles)
 
 
@@ -301,15 +307,20 @@ def crear_colegio():
 
 #Ver Colegio
 @app.route('/ver_colegio/<int:id>')
-def ver_coelgio(id):
+def ver_colegio(id):
+  #Query para Obtener Colegio (id)
   usuario = session.get('user_data')
   mycursor = mydb.cursor()
-  #query de info de actividad
-  query = f"SELECT nmb_esc, tel_escu, celu_esc, email_esc, direc_esc, user FROM escuelas, usuarios WHERE escuela_id = {id} and escuelas.id_user=usuarios.id_user"
-  mycursor.execute(query)
+  query = "SELECT nmb_esc, tel_escu, celu_esc, email_esc, direc_esc, user FROM escuelas, usuarios WHERE escuela_id = %s and escuelas.id_user=usuarios.id_user"
+  mycursor.execute(query, (id,))
   colegio = mycursor.fetchone()
   return render_template('ver_colegio.html', user = usuario, colegio = colegio, personal = "")
 
+#Logout
+@app.route('/logout')
+def logout():
+    session.pop('user_data', None)
+    return redirect(url_for('login'))
 
 #Este no se va a ver, ya que van a tener cuentas creadas por defecto ya..
 #@app.route('/cargar_accs', methods=['POST', 'GET'])
