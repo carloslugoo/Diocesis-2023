@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-11-2023 a las 19:22:13
+-- Tiempo de generación: 16-11-2023 a las 20:39:57
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -54,15 +54,16 @@ CREATE TABLE `actividadxcolegio` (
   `id_axc` int(11) NOT NULL,
   `escuela_id` int(11) NOT NULL,
   `id_actividad` int(11) NOT NULL,
-  `fecha_adherido` date NOT NULL
+  `fecha_adherido` date NOT NULL,
+  `estado` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `actividadxcolegio`
 --
 
-INSERT INTO `actividadxcolegio` (`id_axc`, `escuela_id`, `id_actividad`, `fecha_adherido`) VALUES
-(1, 1, 1, '2023-10-16');
+INSERT INTO `actividadxcolegio` (`id_axc`, `escuela_id`, `id_actividad`, `fecha_adherido`, `estado`) VALUES
+(1, 1, 1, '2023-10-16', 0);
 
 -- --------------------------------------------------------
 
@@ -103,9 +104,9 @@ CREATE TABLE `escuelas` (
 -- Volcado de datos para la tabla `escuelas`
 --
 
-INSERT INTO `escuelas` (`escuela_id`, `nmb_esc`, `celu_esc`, `email_esc`, `direc_esc`, `id_user`) VALUES
-(1, 'Escuela N 2134 test', '555566', 'test@gmail.com', 'Av. Irrazabal', 3),
-(2, 'Escuela N 2134 test', '12344455', 'test@gmail.com', 'Av. Mallorquin', 4);
+INSERT INTO `escuelas` (`escuela_id`, `nmb_esc`, `tel_escu`, `celu_esc`, `email_esc`, `direc_esc`, `id_user`) VALUES
+(1, 'Escuela N 2134 test', '', '555566', 'test@gmail.com', 'Av. Irrazabal', 3),
+(2, 'Escuela N 2134 test', '', '12344455', 'test@gmail.com', 'Av. Mallorquin', 4);
 
 -- --------------------------------------------------------
 
@@ -248,7 +249,7 @@ ALTER TABLE `escuelas`
 -- AUTO_INCREMENT de la tabla `resoluciones`
 --
 ALTER TABLE `resoluciones`
-  MODIFY `id_res` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_res` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_usuarios`

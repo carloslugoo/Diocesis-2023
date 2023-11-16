@@ -192,6 +192,19 @@ def crear_actividad():
       return redirect(url_for('actividades'))
   return render_template('./admin_views/crear_actividades.html', user = usuario)
 
+#Culminar actividad COLEGIO
+@app.route('/culiminar_actividad/<int:id>', methods=['GET', 'POST'])
+def culminar_actividad(id):
+  usuario = session.get('user_data')
+  print(usuario)
+  mycursor = mydb.cursor()
+  #query para obtener los datos
+  query = "SELECT * FROM actividades WHERE id_actividad = %s"
+  mycursor.execute(query, (id,))
+  datos = mycursor.fetchall()
+  print(datos)
+  return render_template('./colegios_views/culminar_actividad.html', user = usuario, datos = datos[0])
+
 #Resoluciones
 @app.route('/resoluciones')
 def resoluciones():

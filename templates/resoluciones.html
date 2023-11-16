@@ -29,9 +29,9 @@
         {% for resolucion in resoluciones %}
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{{ resolucion.3 }}</h5>
+                <h5 class="card-title"><strong>{{ resolucion.3 }}</strong></h5>
                 <p class="card-text" style="text-align: justify;">{{ resolucion.4 }}</p>
-                <p class="card-text"><small class="text-muted">{{ resolucion.5 }}</small></p>
+                <p class="card-text"><small class="text-muted"><strong>Fecha: </strong>{{ resolucion.5 }}</small></p>
                 <a href="{{ url_for('open_pdf', filename=resolucion.2) }}" target="_blank" class="btn btn-success btn-lg btn-block card-button">Ver Documento PDF</a>
                 {% if user.3 == 2%}
                 <button onclick="borrarResolucion('{{resolucion.0}}')" class="btn btn-success btn-lg btn-block btn-block card-button">Borrar Resolucion</button>
