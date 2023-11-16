@@ -1,0 +1,56 @@
+{% if user.3 == 2%}
+    {% extends "./admin_views/base.html" %}
+{%else%}
+    {% extends "./colegios_views/base.html" %}
+{%endif%}
+<head>
+    {% block title %}Culminar actividad{% endblock %}
+</head>
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 bg-white rounded shadow-sm">
+            <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+        <div class="lh-1">
+        <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-journal-bookmark"></i> Titulo: {{datos.1}}</h1>
+        <small></strong>Fecha: <strong>{{datos.4}}</strong></small>
+        </div>
+        </div>
+            <hr>
+            <strong>Descripción de la Actividad:</strong>
+            <p style="text-align: justify;">{{datos.2}}</p>
+            <hr>
+            <strong>Objetivos de la Actividad:</strong>
+            <p style="text-align: justify;">{{datos.3}}</p>
+        </div>
+    </div>
+</div>
+<div class="container mt-4">
+    <div class="row">
+    <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+        <div class="lh-1">
+        <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-journal-check"></i> Culminar {{datos.1}}</h1>
+        <small></small>
+        </div>
+        </div>
+        <div class="col-5  text-right d-flex align-items-center">
+            <form action="/upload_actividades" method="post" enctype="multipart/form-data">
+                <div>
+                    <strong for="title">Fotos de la actividad (maximo 4 imagenes):</strong>
+                    <input type="file" class="btn btn-success btn-lg"  id="archivo" name="archivo[]" accept=".jpg, .jpeg, .png, .gif" style="margin-right: 10px;" multiple required>
+                </div>
+                <br>
+                <div class="form-group">
+                    <strong for="title">Descripción (si desea):</strong>
+                    <textarea class="form-control" id="description" name="description" rows="4" maxlength="150"  required></textarea>
+                </div>
+                <br>
+                <div>
+                    <button type="submit" class="btn btn-success btn-lg">Culimnar activdad <i class="bi bi-check" style="padding-left: 10px;"></i></button>
+                </div>
+            </form>
+        </div>
+</div>
+<!--Evita que mande mas de 4 imagenes-->
+<script src="/static/js/culminar_actividad.js"></script>
+{% endblock %}
