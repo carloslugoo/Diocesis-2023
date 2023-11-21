@@ -309,15 +309,16 @@ def crear_colegio():
       celular = request.form['phone']
       email = request.form['email']
       direccion = request.form['address']
-      sql_insert = f"INSERT INTO escuelas (nmb_esc, tel_escu, celu_esc, email_esc, direc_esc, id_user) VALUES ('{nombre}',{telefono},{celular},'{email}','{direccion}',{usuario[0]})"
+      encargado = request.form['user_asig']
+      sql_insert = f"INSERT INTO escuelas (nmb_esc, tel_escu, celu_esc, email_esc, direc_esc, id_user) VALUES ('{nombre}',{telefono},{celular},'{email}','{direccion}',{encargado})"
       # Ejecuta la sentencia SQL
       mycursor.execute(sql_insert)
       mydb.commit()
       return redirect(url_for('colegios'))
-  mycursor.execute('SELECT id_user,user FROM usuarios')
-  users = mycursor.fetchall()
-  print(users)
-  return render_template('./admin_views/crear_colegio.html', user = usuario, users = users)
+  mycursor.execute('SELECT id_user,user FROM usuarios WHERE id_tipo_user !=2')
+  usuarios = mycursor.fetchall()
+  print(usuarios)
+  return render_template('./admin_views/crear_colegio.html', user = usuario, usuarios = usuarios)
 
 #Ver Colegio
 @app.route('/ver_colegio/<int:id>')
@@ -328,6 +329,7 @@ def ver_colegio(id):
   query = "SELECT nmb_esc, tel_escu, celu_esc, email_esc, direc_esc, user FROM escuelas, usuarios WHERE escuela_id = %s and escuelas.id_user=usuarios.id_user"
   mycursor.execute(query, (id,))
   colegio = mycursor.fetchone()
+  print(colegio)
   return render_template('ver_colegio.html', user = usuario, colegio = colegio, personal = "")
 
 #Cuentas (Configuracion de Colegios y Usuarios)
