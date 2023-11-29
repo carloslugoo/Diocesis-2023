@@ -315,7 +315,7 @@ def crear_colegio():
       mycursor.execute(sql_insert)
       mydb.commit()
       return redirect(url_for('colegios'))
-  mycursor.execute('SELECT id_user,user FROM usuarios WHERE id_tipo_user !=2')
+  mycursor.execute('SELECT id_user,user FROM usuarios WHERE id_tipo_user !=2 and id_user not in (SELECT DISTINCT id_user FROM escuelas)')
   usuarios = mycursor.fetchall()
   print(usuarios)
   return render_template('./admin_views/crear_colegio.html', user = usuario, usuarios = usuarios)
