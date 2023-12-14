@@ -1,0 +1,39 @@
+{% if user.3 == 2%}
+    {% extends "base.html" %}
+{%else%}
+    {% extends "base.html" %}
+{%endif%}
+
+<head>
+    <link rel="stylesheet" href="actividades.css">
+    {% block title %}Actividades{% endblock %}
+</head>
+{% block content %}
+{% if user.3 == 2%}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-3 text-right">
+                <a href="/crear_actividad" class="btn btn-success btn-lg btn-block">Crear actividad</a>
+            </div>
+            {%endif%}
+            <div class="container mt-4">
+                <div class="row">
+                <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+                    <div class="lh-1">
+                    <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-journal-bookmark"></i>Últimas Actividades</h1>
+                    <small></small>
+                    </div>
+                    </div>
+        </div>
+            {% for actividad in actividades %}
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title"><strong>{{actividad.1 }}</strong></h5>
+                  <p class="card-text" style="text-align: justify;">{{ actividad.2}}</p>
+                  <p class="card-text"><small class="text-muted"><strong>Fecha: </strong>{{ actividad.4}}</small></p>
+                  <a href="/ver_actividad/{{actividad.0}}" class="btn btn-success btn-lg btn-block btn-block card-button">Ver actividad</a>
+            </div>
+        </div>
+        <br>
+            {% endfor %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% if user.3 == 2%}
+    {% extends "base.html" %}
+{%else%}
+    {% extends "base.html" %}
+{%endif%}
+
+<head>
+    <link rel="stylesheet" href="reseoluciones.css">
+    {% block title %}Resoluciones{% endblock %}
+</head>
+{% block content %}
+{% if user.3 == 2%}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-3 text-right">
+            <a href="/cargar_resolucion" class="btn btn-success btn-lg btn-block">Cargar resolución</a>
+        </div>
+
+{%endif%}
+ <div class="container mt-4">
+                <div class="row">
+                <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
+                    <div class="lh-1">
+                    <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-card-heading"></i> Últimas resoluciones</h1>
+                    <small></small>
+                    </div>
+                 </div>
+</div>
+        {% for resolucion in resoluciones %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><strong>{{ resolucion.3 }}</strong></h5>
+                <p class="card-text" style="text-align: justify;">{{ resolucion.4 }}</p>
+                <p class="card-text"><small class="text-muted"><strong>Fecha: </strong>{{ resolucion.5 }}</small></p>
+                <a href="{{ url_for('open_pdf', filename=resolucion.2) }}" target="_blank" class="btn btn-success btn-lg btn-block card-button">Ver Documento PDF</a>
+                {% if user.3 == 2%}
+                <button onclick="borrarResolucion('{{resolucion.0}}')" class="btn btn-success btn-lg btn-block btn-block card-button">Borrar Resolucion</button>
+                {%endif%}
+            </div>
+        </div>
+    <br>
+    {% endfor %}
+<script src="/static/js/resoluciones.js"></script>
+{% endblock %}
