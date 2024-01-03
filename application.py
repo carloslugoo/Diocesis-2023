@@ -30,7 +30,7 @@ app.register_blueprint(colegios_views, url_prefix='/', template_folder='views/co
 
 @app.route('/open_pdf/<filename>')
 def open_pdf(filename):
-    ruta_al_archivo = f"resoluciones/{filename}" 
+    ruta_al_archivo = f"data/resoluciones/{filename}" 
     # Abre el archivo en una nueva pestaña
     response = make_response(send_file(ruta_al_archivo, as_attachment=False))
     response.headers['Content-Disposition'] = 'inline'

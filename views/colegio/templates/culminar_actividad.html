@@ -34,10 +34,10 @@
         </div>
         </div>
         <div class="col-5  text-right d-flex align-items-center">
-            <form action="/upload_actividades" method="post" enctype="multipart/form-data">
+            <form action="/culminar_actividad/{{datos.0}}" method="post" enctype="multipart/form-data">
                 <div>
                     <strong for="title">Fotos de la actividad (maximo 4 imagenes):</strong>
-                    <input type="file" class="btn btn-success btn-lg"  id="archivo" name="archivo[]" accept=".jpg, .jpeg, .png, .gif" style="margin-right: 10px;" multiple required>
+                    <input type="file" class="btn btn-success btn-lg"  id="archivo" name="archivo[]" accept=".jpg, .jpeg, .png" style="margin-right: 10px;" multiple required>
                 </div>
                 <br>
                 <div class="form-group">

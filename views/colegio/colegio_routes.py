@@ -1,7 +1,8 @@
 from flask import Blueprint
-from flask import render_template, session, jsonify
+from flask import render_template, session, jsonify, request, redirect, url_for
 import mysql.connector
-
+import datetime
+import os
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
@@ -77,8 +78,6 @@ def ver_actividad(id):
 #Adherirse a la actividad COLEGIO
 @colegios_views.route('/participar_actividad/<int:id>', methods=['POST'])
 def participar_actividad(id):
-  import datetime
-  # Obtén la fecha y hora actual
   fecha_actual = datetime.datetime.now()
   # Formatea la fecha en el formato adecuado para SQL (YYYY-MM-DD HH:MM:SS)
   fecha_formateada = fecha_actual.strftime('%Y-%m-%d')
@@ -92,7 +91,7 @@ def participar_actividad(id):
 
 
 #Culminar actividad COLEGIO
-@colegios_views.route('/culiminar_actividad/<int:id>', methods=['GET', 'POST'])
+@colegios_views.route('/culminar_actividad/<int:id>', methods=['GET', 'POST'])
 def culminar_actividad(id):
   usuario = session.get('user_data')
   print(usuario)
@@ -102,6 +101,29 @@ def culminar_actividad(id):
   mycursor.execute(query, (id,))
   datos = mycursor.fetchall()
   print(datos)
+  if request.method == "POST":
+    print(request.form['description'], request.files.getlist('archivo[]'))
+    archivos = request.files.getlist('archivo[]')
+    cant = 0 #cantidad de archivos
+    for archivo in archivos:
+      nombre, extension = os.path.splitext(archivo.filename)
+      nombre = f"{datos[0][1]}_{usuario[1]}"
+      archivo.filename = nombre + extension
+      cant+= 1
+      #print(archivo.filename)
+      archivo.save('data/actividades_fotos/' + archivo.filename)
+    fecha_actual = datetime.datetime.now()
+    # Formatea la fecha en el formato adecuado para SQL (YYYY-MM-DD HH:MM:SS)
+    fecha_formateada = fecha_actual.strftime('%Y-%m-%d')
+    #guarda el registro de la actividad culminada
+    mycursor.execute('INSERT INTO culminadoxcolegio (escuela_id, id_actividad,desc_f, fecha_f, cant_arch) VALUES (%s, %s, %s, %s, %s)',
+                        (usuario[3], id,request.form['description'],fecha_formateada,cant))
+    mydb.commit()
+    #coloca el estado de la actividad en culminado
+    query = "UPDATE actividadxcolegio SET estado = %s WHERE escuela_id = %s and id_actividad = %s"
+    mycursor.execute(query, (1,usuario[3], id))
+    mydb.commit()
+    return redirect(url_for('colegios.culminar_activdad')) 
   return render_template('culminar_actividad.html', user = usuario, datos = datos[0])
 
 #Resoluciones

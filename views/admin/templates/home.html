@@ -6,8 +6,7 @@
 <div class="container mt-5">
     <!-- Sección de bienvenida  -->
     <div class="text-center mb-4">
-        <h1 class="display-4">Bienvenido {{user.1}}</h1>
-        <p class="lead">Controla las actividades y Resoluciones desde esta vista</p>
+        <h1 class="display-4">Bienvenido, {{user.1}}</h1>
     </div>
     <!-- Carrusel de actividades -->
     <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
@@ -68,19 +67,18 @@
         </a>
     </div>
     
-
-
     <div class="row">
         <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">
             <div class="lh-1">
-            <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-card-heading"></i> Resoluciones</h1>
-            <small></small>
+                <h1 class="h1 mb-0 text-black lh-1"><i class="bi bi-card-heading"></i> Resoluciones</h1>
+                <small></small>
             </div>
         </div>
     </div>
-    <div class="row">
+    
+    <div class="row justify-content-center">
         {% for resolucion in resoluciones %}
-        <div class="col-4">
+        <div class="col-4 mb-4">
             <div class="card" style="height: 350px;">
                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
                     <p class="card-text" style="text-align: justify;">{{ resolucion.4 }}</p>
@@ -90,11 +88,6 @@
             </div>
         </div>
         {% endfor %}
-    </div>
-    <div class="col-2">
-        <br>
-        <a href="/resoluciones" class="btn btn-success btn-lg w-100">Ver Mas</a>
-        <br>
     </div>
     <!-- Lista de Instituciones -->
     <div class="d-flex align-items-center p-4 my-4 text-black bg-success rounded shadow-sm">

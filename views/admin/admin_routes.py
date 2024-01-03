@@ -146,7 +146,7 @@ def upload_file():
       if archivo.filename == '':
           return jsonify({"error": "Nombre de archivo vacío"}), 400  # 400: Bad Request
       if archivo and archivo.filename.endswith('.pdf'):
-          archivo.save(os.path.join('resoluciones', archivo.filename))
+          archivo.save(os.path.join('data/resoluciones', archivo.filename))
           mycursor = mydb.cursor()
           mycursor.execute('INSERT INTO resoluciones (id_user, filename, titulo, des, date) VALUES (%s, %s, %s, %s, %s)',
                           (usuario[3], archivo.filename, titulo, descripcion, fecha_formateada))
