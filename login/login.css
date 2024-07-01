@@ -1,0 +1,65 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 50px;
+    height: 100px;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.left {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right {
+    width: 50%;
+    background: url('../old-project/static/imagenes/login_image.jpg') no-repeat center center;
+    background-size: cover;
+    background-position: left;
+}
+
+.login-form {
+    max-width: 350px;
+    width: 100%;
+    padding: 20px;
+
+}
+
+.login-form h2 {
+    margin-bottom: 20px;
+    font-weight: lighter;
+}
+
+.login-form input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-form button {
+    width: 120px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2ab72e;
+    color: white;
+    font-size: 16px;
+}
+
+label{
+    font-size: 14px;
+}
